@@ -1,4 +1,7 @@
+using ProjectEstimaterRealTime;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSignalR();
 
 // Add services to the container.
 
@@ -12,14 +15,18 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseCors(x => x
+       .AllowAnyMethod()
+       .AllowAnyHeader()
+       .SetIsOriginAllowed(origin => true) // allow any origin
+       .AllowCredentials()); // allow credentials
 }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
+
+app.MapHub<SignalRHub>("/hub");
 
 app.Run();
