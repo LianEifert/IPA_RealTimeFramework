@@ -11,11 +11,11 @@ namespace ProjectEstimaterRealTime
         public async Task joinGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            await Clients.Group(groupName).SendAsync("UserJoined");
+            await Clients.Group(groupName).SendAsync("UserJoined", groupName);
         }
         public async Task ShowVote(string groupName)
         {
-            await Clients.Group(groupName).SendAsync("NewVote");
+            await Clients.Group(groupName).SendAsync("NewVote", groupName);
         }
     }
 }
