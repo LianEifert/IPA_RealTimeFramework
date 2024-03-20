@@ -4,18 +4,18 @@ namespace ProjectEstimaterRealTime
 {
     public class SignalRHub : Hub
     {
-        public async Task ShowResults(string groupName, float votingResult)
+        public async Task ShowResults(string VotingId, float votingResult)
         {
-            await Clients.Group(groupName).SendAsync("VotingFinished", votingResult);
+            await Clients.Group(VotingId).SendAsync("VotingFinished", votingResult, VotingId);
         }
-        public async Task joinGroup(string groupName)
+        public async Task joinGroup(string VotingId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            await Clients.Group(groupName).SendAsync("UserJoined", groupName);
+            await Groups.AddToGroupAsync(Context.ConnectionId, VotingId);
+            await Clients.Group(VotingId).SendAsync("UserJoined", VotingId);
         }
-        public async Task ShowVote(string groupName)
+        public async Task ShowVote(string VotingId)
         {
-            await Clients.Group(groupName).SendAsync("NewVote", groupName);
+            await Clients.Group(VotingId).SendAsync("NewVote", VotingId);
         }
     }
 }
